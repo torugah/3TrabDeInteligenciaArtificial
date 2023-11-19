@@ -69,58 +69,158 @@ public class Methods {
     // MÉTODO PRINCIPAL
     public static void start(int qntd) {
         // CONFIGURAÇÃO DO PROBLEMA
-        int n = 6;
-        int minimo = 20;
-        int maximo = 50;
+        final int n = 6;
+        final int minimo = 20;
+        final int maximo = 50;
 
         // GERA PROBLEMA - MATRIZ DE ADJACÊNCIAS
         int[][] matriz = geraAmbiente(minimo, maximo, n);
+        matrizP = matriz;
+        realizarMetodos(matriz, qntd, n);
+    }
+
+    public static void realizarMetodos(int[][]matriz, int qntd, int n){
+        int[][] matrizUsada; 
+
+        if(matriz == null){
+            matrizUsada =  geraAmbiente(20, 50, 6);
+        } else {
+            matrizUsada = matriz;
+        }
 
         int qt = qntd;
-        System.out.println(qt);
         double ga1 = 0;
         double ga2 = 0;
         double ga3 = 0;
 
-        for (int i = 0; i < qt; i++) {
-            // GERA SOLUÇÃO INICIAL ALEATÓRIA
-            int[] si = solucaoInicial(n);
-            solucaoInicialP = si;
+        // GERA SOLUÇÃO INICIAL ALEATÓRIA
+        int[] si = solucaoInicial(n);
+        solucaoInicialP = si;
 
-            // AVALIA SOLUÇÃO INICIAL
-            int vi = avaliaSolucao(si, matriz, n);
-            custoInicialP = vi;
+        // AVALIA SOLUÇÃO INICIAL
+        int vi = avaliaSolucao(si, matrizUsada, n);
+        custoInicialP = vi;
 
-            // EXECUTA - SUBIDA DE ENCOSTA
-            int[] sf = encosta(si, vi, matriz, n);
-            ga1 += (double) (vi - avaliaSolucao(sf, matriz, n)) / vi;
-            solucaoSubidaDeEncostaP = sf;
+        // EXECUTA - SUBIDA DE ENCOSTA
+        int[] sf = encosta(si, vi, matrizUsada, n);
+        ga1 += (double) (vi - avaliaSolucao(sf, matriz, n)) / vi;
+        solucaoSubidaDeEncostaP = sf;
 
-            // EXECUTA - SUBIDA DE ENCOSTA ALTERADA
-            int tmax = n - 1;
-            int[] sfAlt = encostaAlt(si, vi, matriz, n, tmax);
-            ga2 += (double) (vi - avaliaSolucao(sfAlt, matriz, n)) / vi;
-            solucaoSubidaDeEAlteradaP = sfAlt;
+        // EXECUTA - SUBIDA DE ENCOSTA ALTERADA
+        int tmax = n - 1;
+        int[] sfAlt = encostaAlt(si, vi, matrizUsada, n, tmax);
+        ga2 += (double) (vi - avaliaSolucao(sf, matrizUsada, n)) / vi;
+        solucaoSubidaDeEAlteradaP = sfAlt;
 
-            // EXECUTA - TEMPERA SIMULADA
-            double tIni = 800;
-            double tFim = 0.01;
-            double ftRed = 0.95;
-            int[] sfTemp = tempera(si, vi, matriz, tIni, tFim, ftRed);
-            ga3 += (double) (vi - avaliaSolucao(sfTemp, matriz, n)) / vi;
-            solucaoTemperaSimuladaP = sfTemp;
-        }
-
-        System.out.println("Ganho - Subida de Encosta....: " + 100 * ga1 / qt);
-        System.out.println("Ganho - Subida de Encosta_A..: " + 100 * ga2 / qt);
-        System.out.println("Ganho - Tempera Simulada.....: " + 100 * ga3 / qt);
+        // EXECUTA - TEMPERA SIMULADA
+        double tIni = 800;
+        double tFim = 0.01;
+        double ftRed = 0.95;
+        int[] sfTemp = tempera(si, vi, matrizUsada, tIni, tFim, ftRed);
+        ga3 += (double) (vi - avaliaSolucao(sfTemp, matrizUsada, n)) / vi;
+        solucaoTemperaSimuladaP = sfTemp;        
 
         ganhoComSubidaDeEncostaP = 100 * ga1 / qt;
         ganhoComSubidaDeEncostaAlteradaP = 100 * ga2 / qt;
         ganhoComTemperaSimuladaP = 100 * ga3 / qt;
+    }
 
-        matrizP = matriz;
+    public static String realizarMetodosParaTabela(int tentativa, 
+                                                    double tempInicial1, double tempFinal1, double fatorRed1,
+                                                    double tempInicial2, double tempFinal2, double fatorRed2,
+                                                    double tempInicial3, double tempFinal3, double fatorRed3,
+                                                    double tempInicial4, double tempFinal4, double fatorRed4,
+                                                    double tempInicial5, double tempFinal5, double fatorRed5){
+
+        int[][] matrizUsada = geraAmbiente(20, 50, 6); 
+        int n = 6;
+
+        double ga1 = 0;
+        double ga2 = 0;
+        double ga3 = 0;
+        double ga4 = 0;
+        double ga5 = 0;
+        double ga6 = 0;
+        double ga7 = 0;
+        double ga8 = 0;
+        double ga9 = 0;
+
+        // GERA SOLUÇÃO INICIAL ALEATÓRIA
+        int[] si = solucaoInicial(n);
+        solucaoInicialP = si;
+
+        // AVALIA SOLUÇÃO INICIAL
+        int vi = avaliaSolucao(si, matrizUsada, n);
+        custoInicialP = vi;
+
+        // EXECUTA - SUBIDA DE ENCOSTA
+        int[] sf = encosta(si, vi, matrizUsada, n);
+        ga1 += (double) (vi - avaliaSolucao(sf, matrizUsada, n)) / vi;
+        solucaoSubidaDeEncostaP = sf;
+
+        // EXECUTA - SUBIDA DE ENCOSTA ALTERADA
+        int tmax = tentativa;
+        int[] sfAlt = encostaAlt(si, vi, matrizUsada, n, tmax);
+        ga2 += (double) (vi - avaliaSolucao(sfAlt, matrizUsada, n)) / vi;
+        solucaoSubidaDeEAlteradaP = sfAlt;
         
+        int tmax2 = tentativa / 2;
+        int[] sfAlt2 = encostaAlt(si, vi, matrizUsada, n, tmax2);
+        ga3 += (double) (vi - avaliaSolucao(sfAlt2, matrizUsada, n)) / vi;
+        solucaoSubidaDeEAlteradaP = sfAlt;
+
+        int tmax3 = tentativa / 4;
+        int[] sfAlt3 = encostaAlt(si, vi, matrizUsada, n, tmax3);
+        ga4 += (double) (vi - avaliaSolucao(sfAlt3, matrizUsada, n)) / vi;
+        solucaoSubidaDeEAlteradaP = sfAlt;
+
+        // EXECUTA - TEMPERA SIMULADA
+        int[] sfTemp = tempera(si, vi, matrizUsada, tempInicial1, tempFinal1, fatorRed1);
+        ga5 += (double) (vi - avaliaSolucao(sfTemp, matrizUsada, n)) / vi;
+        solucaoTemperaSimuladaP = sfTemp;     
+           
+        // EXECUTA - TEMPERA SIMULADA
+        int[] sfTemp2 = tempera(si, vi, matrizUsada, tempInicial2, tempFinal2, fatorRed2);
+        ga6 += (double) (vi - avaliaSolucao(sfTemp2, matrizUsada, n)) / vi;
+        solucaoTemperaSimuladaP = sfTemp; 
+
+        // EXECUTA - TEMPERA SIMULADA
+        int[] sfTemp3 = tempera(si, vi, matrizUsada, tempInicial3, tempFinal3, fatorRed3);
+        ga7 += (double) (vi - avaliaSolucao(sfTemp3, matrizUsada, n)) / vi;
+        solucaoTemperaSimuladaP = sfTemp;
+
+        // EXECUTA - TEMPERA SIMULADA
+        int[] sfTemp4 = tempera(si, vi, matrizUsada, tempInicial4, tempFinal4, fatorRed4);
+        ga8 += (double) (vi - avaliaSolucao(sfTemp4, matrizUsada, n)) / vi;
+        solucaoTemperaSimuladaP = sfTemp;    
+         
+        // EXECUTA - TEMPERA SIMULADA
+        int[] sfTemp5 = tempera(si, vi, matrizUsada, tempInicial5, tempFinal5, fatorRed5);
+        ga9 += (double) (vi - avaliaSolucao(sfTemp5, matrizUsada, n)) / vi;
+        solucaoTemperaSimuladaP = sfTemp;     
+
+
+        double ganhoComSubidaDeEncostaPK = 100 * ga1;
+        double ganhoComSubidaDeEncostaAlteradaPK = 100 * ga2;
+        double ganhoComSubidaDeEncostaAlteradaPK2 = 100 * ga3;
+        double ganhoComSubidaDeEncostaAlteradaPK3 = 100 * ga4;
+        double ganhoComTemperaSimuladaPK = 100 * ga5;
+        double ganhoComTemperaSimuladaPK2 = 100 * ga6;
+        double ganhoComTemperaSimuladaPK3 = 100 * ga7;
+        double ganhoComTemperaSimuladaPK4 = 100 * ga8;
+        double ganhoComTemperaSimuladaPK5 = 100 * ga9;
+
+        String registro = String.valueOf(ganhoComSubidaDeEncostaPK) + "," +
+                            String.valueOf(ganhoComSubidaDeEncostaAlteradaPK) + "," +
+                            String.valueOf(ganhoComSubidaDeEncostaAlteradaPK2) + "," +
+                            String.valueOf(ganhoComSubidaDeEncostaAlteradaPK3) + "," +
+                            String.valueOf(ganhoComTemperaSimuladaPK) + "," +
+                            String.valueOf(ganhoComTemperaSimuladaPK2) + "," +
+                            String.valueOf(ganhoComTemperaSimuladaPK3) + "," +
+                            String.valueOf(ganhoComTemperaSimuladaPK4) + "," +
+                            String.valueOf(ganhoComTemperaSimuladaPK5);
+        
+        return registro;
     }
 
     // MÉTODO PARA GERAR MATRIZ DE ADJACÊNCIAS
