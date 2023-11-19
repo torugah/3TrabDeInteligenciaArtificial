@@ -10,10 +10,14 @@ public class Methods {
     private static int[] solucaoSubidaDeEncostaP;
     private static int[] solucaoSubidaDeEAlteradaP;
     private static int[] solucaoTemperaSimuladaP;
+    private static int custoInicialP;
     private static int custoSubidaDeEncostaP;
     private static int custoSubidaDeEAlteradaP;
     private static int custoTemperaSimuladaP;
-    
+    private static double ganhoComSubidaDeEncostaP;
+    private static double ganhoComSubidaDeEncostaAlteradaP;
+    private static double ganhoComTemperaSimuladaP;
+
     public static int[][] retorneMatriz(){
         return matrizP;
     }
@@ -34,6 +38,10 @@ public class Methods {
         return solucaoTemperaSimuladaP;
     }
 
+    public static int custoInicialP(){
+        return custoInicialP;
+    }
+
     public static int custoSubidaDeEncostaP(){
         return custoSubidaDeEncostaP;
     }
@@ -46,8 +54,20 @@ public class Methods {
         return custoTemperaSimuladaP;
     }
 
+    public static double ganhoComSubidaDeEncostaP(){
+        return ganhoComSubidaDeEncostaP;
+    }
+
+    public static double ganhoComSubidaDeEncostaAlteradaP(){
+        return ganhoComSubidaDeEncostaAlteradaP;
+    }
+
+    public static double ganhoComTemperaSimuladaP(){
+        return ganhoComTemperaSimuladaP;
+    }
+
     // MÉTODO PRINCIPAL
-    public static void start() {
+    public static void start(int qntd) {
         // CONFIGURAÇÃO DO PROBLEMA
         int n = 6;
         int minimo = 20;
@@ -56,7 +76,8 @@ public class Methods {
         // GERA PROBLEMA - MATRIZ DE ADJACÊNCIAS
         int[][] matriz = geraAmbiente(minimo, maximo, n);
 
-        int qt = 1;
+        int qt = qntd;
+        System.out.println(qt);
         double ga1 = 0;
         double ga2 = 0;
         double ga3 = 0;
@@ -68,6 +89,7 @@ public class Methods {
 
             // AVALIA SOLUÇÃO INICIAL
             int vi = avaliaSolucao(si, matriz, n);
+            custoInicialP = vi;
 
             // EXECUTA - SUBIDA DE ENCOSTA
             int[] sf = encosta(si, vi, matriz, n);
@@ -92,6 +114,10 @@ public class Methods {
         System.out.println("Ganho - Subida de Encosta....: " + 100 * ga1 / qt);
         System.out.println("Ganho - Subida de Encosta_A..: " + 100 * ga2 / qt);
         System.out.println("Ganho - Tempera Simulada.....: " + 100 * ga3 / qt);
+
+        ganhoComSubidaDeEncostaP = 100 * ga1 / qt;
+        ganhoComSubidaDeEncostaAlteradaP = 100 * ga2 / qt;
+        ganhoComTemperaSimuladaP = 100 * ga3 / qt;
 
         matrizP = matriz;
         
