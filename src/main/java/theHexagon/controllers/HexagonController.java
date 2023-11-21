@@ -16,13 +16,7 @@ import theHexagon.Methods;
 
 @RestController
 @RequestMapping(value = "/program")
-@CrossOrigin(origins = {"http://localhost:8080",
-                        "http://localhost:5500",
-                        "http://127.0.0.1:5500",
-                        "http://127.0.0.1:5500/index.html",
-                        "http://127.0.0.1:5501",
-                        "http://localhost:5501",
-                        "http://127.0.0.1:5500/relatorio.html"}, allowedHeaders = {"Authorization"})
+@CrossOrigin(origins = {"*"}, allowedHeaders = {"Authorization"})
 
 public class HexagonController {
 
@@ -75,15 +69,15 @@ public class HexagonController {
 
         List<String> response = new ArrayList<>();
         response.add("Método — Dados Fornecidos — Ganhos");
-        response.add("SE    " + String.valueOf(df.format(arrayValores[0])) + "%");
+        response.add("SE  —  " + String.valueOf(df.format(arrayValores[0])) + "%");
         response.add("SEA — Tentativas: " + tentativa + " — " + String.valueOf(df.format(arrayValores[1])) + "%");
         response.add("SEA — Tentativas: " + tentativa/2 + " — " +String.valueOf(df.format(arrayValores[2])) + "%");
         response.add("SEA — Tentativas: " + tentativa/4 + " — " +String.valueOf(df.format(arrayValores[3])) + "%");
-        response.add("TS  — Temp. Inicial: " + ti1 +"   Temp. Final: "+ tf1 +"   Fator Red.: "+ fr1 + " — " + String.valueOf(df.format(arrayValores[4])) + "%");
-        response.add("TS  — Temp. Inicial: " + ti2 +"   Temp. Final: "+ tf2 +"   Fator Red.: "+ fr2 + " — " + String.valueOf(df.format(arrayValores[5])) + "%");
-        response.add("TS  — Temp. Inicial: " + ti3 +"   Temp. Final: "+ tf3 +"   Fator Red.: "+ fr3 + " — " + String.valueOf(df.format(arrayValores[6])) + "%");
-        response.add("TS  — Temp. Inicial: " + ti4 +"   Temp. Final: "+ tf4 +"   Fator Red.: "+ fr4 + " — " + String.valueOf(df.format(arrayValores[7])) + "%");
-        response.add("TS  — Temp. Inicial: " + ti5 +"   Temp. Final: "+ tf5 +"   Fator Red.: "+ fr5 + " — " + String.valueOf(df.format(arrayValores[8])) + "%");
+        response.add("TS  — Temp. Inicial: " + ti1 +"  — Temp. Final: "+ tf1 +"  — Fator Red.: "+ fr1 + " — " + String.valueOf(df.format(arrayValores[4])) + "%");
+        response.add("TS  — Temp. Inicial: " + ti2 +"  — Temp. Final: "+ tf2 +"  — Fator Red.: "+ fr2 + " — " + String.valueOf(df.format(arrayValores[5])) + "%");
+        response.add("TS  — Temp. Inicial: " + ti3 +"  — Temp. Final: "+ tf3 +"  — Fator Red.: "+ fr3 + " — " + String.valueOf(df.format(arrayValores[6])) + "%");
+        response.add("TS  — Temp. Inicial: " + ti4 +"  — Temp. Final: "+ tf4 +"  — Fator Red.: "+ fr4 + " — " + String.valueOf(df.format(arrayValores[7])) + "%");
+        response.add("TS  — Temp. Inicial: " + ti5 +"  — Temp. Final: "+ tf5 +"  — Fator Red.: "+ fr5 + " — " + String.valueOf(df.format(arrayValores[8])) + "%");
 
         return response;
     }
